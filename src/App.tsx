@@ -1,15 +1,15 @@
+import { Outlet } from 'react-router-dom';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from '@/lib/queryClient';
 
-import './App.css'
-
-function App() {
-
+export default function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold text-blue-500 underline">
-        Hello world!
-      </h1>
-    </>
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <Outlet />
 
-export default App
+      {/* burada layout / navbar vs. olabilir */}
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+    </QueryClientProvider>
+  );
+}
