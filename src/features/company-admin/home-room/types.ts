@@ -1,31 +1,30 @@
-/** Home-Room çekirdek modeli */
+/** Temel Home-Room modeli (backend entity’si ile tamamen uyumlu) */
 export interface HomeRoom {
+  id: string;
+  cycleStart: string;   // ISO 8601  → Date yerine string tutuyoruz
+  cycleEnd: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Katılımcı */
+export interface HomeRoomParticipant {
+  id: string;
+  user: {
     id: string;
-    name: string;
-    startDate: string;      // ISO-8601
-    endDate: string;
-    status: 'SCHEDULED' | 'ONGOING' | 'COMPLETED';
-    participantCount: number;
-    createdAt: string;
-    updatedAt: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
 }
 
-/** Sayfalama metadatası (backend’in ortak yapısına uygun) */
-export interface PaginationMeta {
-    page: number;
-    limit: number;
-    itemCount: number;
-    pageCount: number;
+/** Oluşturma formu */
+export interface CreateHomeRoomForm {
+  cycleStart: string;   // ISO
+  cycleEnd: string;     // ISO
 }
 
-export interface HomeRoomListResponse {
-    items: HomeRoom[];
-    meta: PaginationMeta;
-}
-
-/** Oluşturma input’u */
-export interface CreateHomeRoomInput {
-    name: string;
-    startDate: string;
-    endDate: string;
+/** Katılımcı atama formu */
+export interface AssignParticipantsForm {
+  userIds: string[];
 }

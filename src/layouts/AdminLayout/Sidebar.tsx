@@ -7,6 +7,8 @@ import { useState } from 'react';
 
 const links = [
   { to: '/admin/users', label: 'Kullanıcılar', icon: Users },
+  { to: '/admin/home-rooms', label: 'Home-Rooms', icon: Home },
+
   // diğer admin linkleri
 ];
 
