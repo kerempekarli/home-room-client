@@ -1,17 +1,16 @@
-// src/router/index.tsx (veya nerede tanımlıyorsan)
+// src/router/index.tsx
 import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
 import LoginPage from "@/features/auth/LoginPage";
 import UnauthorizedPage from "@/router/pages/UnauthorizedPage";
 import { RequireAuth, RequireRole } from "./guards";
 
-/* Layout’lar */
-import AdminLayout from "@/layouts/AdminLayout/AdminLayout";
+/* Company-Admin route ağacı */
+import CompanyAdminRoutes from "@/features/company-admin/routes";
 
-/* Sayfalar */
-import UsersPage from "@/features/user/pages/UsersPage";
-// (istersen SuperAdmin’e özel ayrı bir Dashboard ekleyebilirsin)
-import SuperAdminDashboard from "@/features/super-admin/pages/SuperAdminPage"; // optional
+/* Super-Admin sayfaları (opsiyonel) */
+import SuperAdminDashboard from "@/features/super-admin/pages/SuperAdminPage";
+import AdminLayout from "@/layouts/AdminLayout/AdminLayout";
 
 export const router = createBrowserRouter([
   {
@@ -22,25 +21,12 @@ export const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "unauthorized", element: <UnauthorizedPage /> },
 
-      /* ---- PROTECTED (login) ---- */
+      /* ---- PROTECTED ---- */
       {
         element: <RequireAuth />,
         children: [
-          /* ---------- ADMIN + SUPER_ADMIN ---------- */
-          {
-            path: "admin",
-            element: <RequireRole roles={["ADMIN", "SUPER_ADMIN"]} />,
-            children: [
-              {
-                element: <AdminLayout />, // sidebar + header
-                children: [
-                  { index: true, element: <UsersPage /> }, // /admin
-                  { path: "users", element: <UsersPage /> },
-                  /* ... başka admin route’ları ... */
-                ],
-              },
-            ],
-          },
+          /* ---------- Company-Admin (ADMIN) ---------- */
+          CompanyAdminRoutes,
 
           /* ---------- Sadece SUPER_ADMIN ---------- */
           {
@@ -48,10 +34,10 @@ export const router = createBrowserRouter([
             element: <RequireRole roles={["SUPER_ADMIN"]} />,
             children: [
               {
-                element: <AdminLayout />, // aynı layout’u reuse edelim
+                element: <AdminLayout />, // Shared layout
                 children: [
-                  { index: true, element: <SuperAdminDashboard /> }, // /super-admin
-                  { path: "tenants", element: <SuperAdminDashboard /> },     // /super-admin/tenants
+                  { index: true, element: <SuperAdminDashboard /> },
+                  { path: "tenants", element: <SuperAdminDashboard /> },
                 ],
               },
             ],

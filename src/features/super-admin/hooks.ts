@@ -30,7 +30,7 @@ export const useCreateTenantThenAdmin = () => {
           role: "ADMIN",
           firstName: input.adminFirstName,
           lastName: input.adminLastName,
-          tenantId: tenant.id
+          tenantId: tenant.data.id
         }
       );
 
