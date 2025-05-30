@@ -34,7 +34,7 @@ export default function HomeRoomCard({ room }: Props) {
     return (
         <Card
             className="cursor-pointer transition hover:shadow-lg"
-            onClick={() => navigate(`/company-admin/home-rooms/${room.id}`)}
+            onClick={() => navigate(`/admin/home-rooms/${room.id}`)}
         >
             <CardHeader>
                 <CardTitle className="flex items-center justify-between text-base">

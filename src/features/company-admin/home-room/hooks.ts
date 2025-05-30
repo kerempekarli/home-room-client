@@ -1,9 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+    fetchHomeRooms,
+    fetchHomeRoomById,
+    fetchParticipants,
     assignParticipants,
     createHomeRoom,
-    fetchHomeRooms,
-    fetchParticipants,
 } from "./api";
 import type {
     AssignParticipantsForm,
@@ -11,20 +12,19 @@ import type {
     HomeRoomParticipant,
 } from "./types";
 
-/* ---- Home-Room listesi ---- */
+/* ---- Liste ---- */
 export const useHomeRooms = () =>
     useQuery<HomeRoom[]>({ queryKey: ["homeRooms"], queryFn: fetchHomeRooms });
 
-/* ---- Home-Room oluştur ---- */
-export const useCreateHomeRoom = () => {
-    const qc = useQueryClient();
-    return useMutation({
-        mutationFn: createHomeRoom,
-        onSuccess: () => qc.invalidateQueries({ queryKey: ["homeRooms"] }),
-    });
-};
+/* ---- Detay ---- */
+export const useHomeRoomById = () =>
+    useQuery<HomeRoom>({
 
-/* ---- Katılımcı listesi ---- */
+        queryKey: ["homeRoom"],
+        queryFn: () => fetchHomeRoomById(),
+    });
+
+/* ---- Katılımcılar ---- */
 export const useHomeRoomParticipants = (id?: string | null) =>
     useQuery<HomeRoomParticipant[]>({
         enabled: !!id,
@@ -32,12 +32,22 @@ export const useHomeRoomParticipants = (id?: string | null) =>
         queryFn: () => fetchParticipants(id as string),
     });
 
-/* ---- Katılımcı atama ---- */
+/* ---- Katılımcı ekleme ---- */
 export const useAssignParticipants = (id: string) => {
     const qc = useQueryClient();
     return useMutation({
-        mutationFn: (input: AssignParticipantsForm) => assignParticipants(id, input),
+        mutationFn: (input: AssignParticipantsForm) =>
+            assignParticipants(id, input),
         onSuccess: () =>
             qc.invalidateQueries({ queryKey: ["homeRoomParticipants", id] }),
+    });
+};
+
+/* ---- Oluşturma ---- */
+export const useCreateHomeRoom = () => {
+    const qc = useQueryClient();
+    return useMutation({
+        mutationFn: createHomeRoom,
+        onSuccess: () => qc.invalidateQueries({ queryKey: ["homeRooms"] }),
     });
 };
