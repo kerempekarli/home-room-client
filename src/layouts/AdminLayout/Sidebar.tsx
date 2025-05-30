@@ -2,13 +2,13 @@
 import { NavLink } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Home, Users } from 'lucide-react';
+import { Home, Users, Settings } from 'lucide-react';
 import { useState } from 'react';
 
 const links = [
   { to: '/admin/users', label: 'Kullanıcılar', icon: Users },
   { to: '/admin/home-rooms', label: 'Home-Rooms', icon: Home },
-
+  { to: '/admin/settings', label: 'Settings', icon: Settings },
   // diğer admin linkleri
 ];
 

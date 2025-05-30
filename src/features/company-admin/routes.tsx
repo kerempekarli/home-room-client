@@ -12,6 +12,7 @@ const HomeRoomListPage = lazy(
 const HomeRoomDetailPage = lazy(
   () => import("./home-room/pages/HomeRoomDetailPage"),
 );
+const LazySettingPage = lazy(() => import("./setting/pages/SettingPage")); // 👈 yeni eklendi
 
 /**
  * Company-Admin’e ait tüm alt route ağacı.
@@ -34,6 +35,16 @@ const CompanyAdminRoutes: RouteObject = {
           path: "home-rooms/:id",
           element: <HomeRoomDetailPage />,
         }, // /admin/home-rooms/123
+
+        {
+          path: 'settings',
+          element: (
+
+            <LazySettingPage />
+
+          ),
+        }
+
       ],
     },
   ],
