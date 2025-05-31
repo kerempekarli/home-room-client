@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input2 } from '@/components/ui/input';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
+import moment from 'moment-timezone';
 
 const schema = z.object({
     cycleLengthDays: z.number().int().min(7).max(30),
@@ -49,9 +50,9 @@ export const SettingForm = () => {
         update.mutate(values as Setting);
     };
 
-    const timeZones = Intl?.DateTimeFormat?.().resolvedOptions?.().timeZone
-        ? [Intl.DateTimeFormat().resolvedOptions().timeZone]
-        : [];
+    const timeZones = moment.tz.names(); // ✅ 500+ time zone verir
+
+
 
     return (
         <form
