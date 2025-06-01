@@ -11,6 +11,8 @@ import CompanyAdminRoutes from "@/features/company-admin/routes";
 /* Super-Admin sayfaları (opsiyonel) */
 import SuperAdminDashboard from "@/features/super-admin/pages/SuperAdminPage";
 import AdminLayout from "@/layouts/AdminLayout/AdminLayout";
+import homeRoomRoutes from "@/features/homeRoom/router";
+
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,13 @@ export const router = createBrowserRouter([
               },
             ],
           },
+          // -------------- HOME ROOM ---------------------
+
+          ...homeRoomRoutes,
+
+
+
+
         ],
       },
     ],
